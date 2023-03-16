@@ -1,0 +1,144 @@
+:root {
+	--font-size: 14px;
+	--code-block-bg: #f3f3f3;
+	--code-snippet-bg: #eeeeea;
+}
+
+* {
+	font-size: var(--font-size);
+}
+
+body {
+	font-family: sans-serif;
+	line-height: 1.6;
+	display: flex;
+	min-height: 100%;
+	color: #444;
+	background-color: #fffdf4;
+	margin : 0px;
+}
+
+html {
+	scrollbar-color: #888 #fffdf4;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 2em;
+	margin-bottom: 0.5em;
+}
+
+table, th, td {
+	border: 1px solid #888;
+	border-spacing: 0px;
+}
+
+th, td {
+	padding: 10px;
+}
+
+.title {
+	margin-top: 0;
+}
+
+p {
+	margin: 0 0 0 0;
+}
+
+nav {
+	padding: 30px;
+}
+
+a:link { color: #c1975d }
+a:visited { color: #c4aa85 }
+a:hover { color: #af9c82 }
+a:active { color: #c4aa85 }
+
+article {
+	padding: 30px;
+	padding: 30px;
+}
+
+#main {
+	display: flex;
+	flex-flow: row;
+	flex-grow: 1;
+}
+
+pre > code, textarea > code, textarea {
+	border: 1.5px solid #888;
+	background-color: var(--code-block-bg);
+	scrollbar-color: #888 var(--code-block-bg);
+	padding: 5px;
+}
+
+code {
+	padding: 3px;
+}
+
+:not(pre, textarea) > code {
+	background-color: var(--code-snippet-bg);
+	border-radius: 3px;
+}
+
+textarea, code {
+	display: inline-table;
+	tab-size: 4;
+	-moz-tab-size: 4;
+	line-height: 1;
+	white-space: pre;
+	overflow-x: scroll;
+	color: #222;
+	font-family: "azuki_font", monospace;
+}
+
+button {
+	background-color: var(--code-block-bg);
+	border-radius: 3px;
+	text-decoration: none;
+	border: 1.5px solid #888;
+	color: #444;
+}
+
+#brevis_source {
+	width: 100%;
+}
+.tab-bar {
+    margin-top: 50px;
+    width: 100%;
+    overflow: hidden;
+    display: table;
+    background-color: #e9eae4;
+}
+.tablink {
+  color: #222;
+  float: left;
+  display: block;
+  width: auto;
+  border: none;
+  padding: 8px 25px;
+  font: 100% "azuki_font";
+  background-color: #e9eae4;
+  cursor: pointer;
+}
+.tablink:hover {
+    background-color: #deded0 !important;
+}
+
+@media (max-width: 640px) {
+	article {
+		border-top: thin dotted #999;
+	}
+	#main {
+		flex-direction: column;
+	}
+}
+
+@media (min-width: 640px) {
+	article {
+		border-left: thin dotted #999;
+	}
+	#main {
+		flex-direction: row;
+	}
+}
+
