@@ -3,7 +3,7 @@
 <p>\[\begin{align}<br/>
 expr ::=&amp; \space op \space | \space op, expr\\<br/>
 op \space ::=&amp; \space Lambda \\<br/>
-&amp;| \space Var \space n \\<br/>
+&amp;| \space Var_n \\<br/>
 &amp;| \space Apply \\<br/>
 &amp;| \space Pop \\<br/>
 \end{align}\]<br/>
@@ -28,23 +28,23 @@ As can be seen, there are four operators in the stack-based lambda calculus, one
 <td>Var n</td>
 <td>+1</td>
 <td>0</td>
-<td>0 &lt;= n &lt; depth</td>
+<td>0 &lt;= n &lt; D</td>
 </tr>
 <tr>
 <td>Apply</td>
 <td>-1</td>
 <td>0</td>
-<td>s &gt; 1</td>
+<td>S &gt; 1</td>
 </tr>
 <tr>
 <td>Pop</td>
 <td>0</td>
 <td>-1</td>
-<td>s = 1</td>
+<td>S = 1</td>
 </tr>
 </tbody>
 </table>
-<p>There are two values that get modified as a stack-based lambda calculus program is evaluated: the stack, and a 'depth counter'.</p>
+<p>There are two values that get modified as a stack-based lambda calculus program is read: the stack depth S, and the lambda depth D.</p>
 <p>If you're familiar with stack-based programming, skip this next section.</p>
 <h1>The stack</h1>
 <p>The stack has two operations that can be done to it: \(Pop\) and \(Push \space expr\), where \(expr\) is an expression to place at the &quot;top&quot; of the stack, and Pop returns the expression at the top of the stack.</p>
@@ -56,7 +56,7 @@ As can be seen, there are four operators in the stack-based lambda calculus, one
 <p>\(Apply\) takes two stack parameters, the first popped is named \(f\), the second named \(x\), and pushes \((f \space x)\) to the stack. (This value will be evaluated before it is required, but not necesarily at the time of application).</p>
 <p>\(Pop\) requires that there be exactly one expression on the stack. This enforces that lambdas have a body of exactly one expression.</p>
 <p>Therefore, the identity program is written as follows:<br/>
-\(\lambda 0 = Lambda, Var \space 0, Pop\).</p>
+\(\lambda 0 = Lambda, Var_0, Pop\).</p>
 <p>... But hold on, isn't that <em>more</em> verbose? In terms of characters written, sure! But consider that both the writer of a program and the reader of an encoded program read left-to-right, and can retain the knowledge they gain from previous symbols.</p>
 <p>Because each of our instructions has a known stack effect, depth effect, and requirement to write (listed at the top of the page), we can make programs numeric.</p>
 <p><a href="Nlc.html">Nlc</a></p>
