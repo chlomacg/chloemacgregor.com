@@ -21,8 +21,8 @@ color_dict = {
 	"false": "#bc634f"
 };
 
-function highlight_kw(_, s1, keyword, s2) {
-	return '<span style="color: ' + color_dict[keyword] + '">' + s1 + keyword + s2 + '</span>';
+function highlight_kw(keyword) {
+	return '<span style="color: ' + color_dict[keyword] + '">' + keyword + '</span>';
 }
 
 function highlight(text) {
@@ -33,10 +33,9 @@ function highlight(text) {
   for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
 
-    line = line.replace(/(\s|\b)(let|fn|if|else|and|or|xor|true|false|int|float|string|void|bool)(\s|\b)/g, highlight_kw);
+    line = line.replace(/\b(let|fn|if|else|and|or|xor|true|false|int|float|string|void|bool)\b/g, highlight_kw);
 
-    // Comments are handled separately
-    if (!comment)
+    if (!comment) // Multiline comments shit
     {
       var result1 = line.match(/\/\*([\s\S]*?)\*\//ig);
 

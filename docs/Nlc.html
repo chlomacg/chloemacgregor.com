@@ -1,0 +1,106 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><!DOCTYPE html><html><head><meta charset=UTF-8><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Markdown to HTML Converter 1.1.9 by magiclen.org"/><title></title><style>body{font-family:sans-serif;max-width:700px;line-height:1.5;padding:16px;margin:0 auto;}img{display:block;max-width:100%;}a{text-decoration:none;color:#0074d9;}a:hover{text-decoration:underline;}pre{-moz-tab-size:2;tab-size:2;}.math-display{overflow:auto;}table{border-collapse:collapse;}th,td{padding:12px 15px;border:thin solid #666;}thead tr{color:#444;text-align:left;}</style><style>@font-face {font-family:'CJK';src:local("NotoSansCJKTC-Regular"),local("SourceHanSansTC-Regular"),local("SourceHanSansTW-Regular"),local("NotoSansCJKJP-Regular"),local("NotoSansCJKKR-Regular"),local("NotoSansCJKHK-Regular"),local("NotoSansCJKSC-Regular"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-tc-woff2@2.004/SourceHanSansTC-Regular.woff2") format("woff2");font-display:swap}@font-face {font-family:'CJK';font-weight:bold;src:local("NotoSansCJKTC-Bold"),local("SourceHanSansTC-Bold"),local("SourceHanSansTW-Bold"),local("NotoSansCJKJP-Bold"),local("NotoSansCJKKR-Bold"),local("NotoSansCJKHK-Bold"),local("NotoSansCJKSC-Bold"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-tc-woff2@2.004/SourceHanSansTC-Bold.woff2") format("woff2");font-display:swap}</style><style>@font-face {font-family:'CJK MONO';src:local("NotoSansMonoCJKTC-Regular"),local("SourceHanSansHWTC-Regular"),local("SourceHanSansHWTW-Regular"),local("NotoSansMonoCJKJP-Regular"),local("NotoSansMonoCJKKR-Regular"),local("NotoSansMonoCJKHK-Regular"),local("NotoSansMonoCJKSC-Regular"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-hw-tc-woff2@2.004/SourceHanSansHWTC-Regular.woff2") format("woff2");font-display:swap}@font-face {font-family:'CJK MONO';font-weight:bold;src:local("NotoSansMonoCJKTC-Bold"),local("SourceHanSansHWTC-Bold"),local("SourceHanSansHWTW-Bold"),local("NotoSansMonoCJKJP-Bold"),local("NotoSansMonoCJKKR-Bold"),local("NotoSansMonoCJKHK-Bold"),local("NotoSansMonoCJKSC-Bold"),url($font_url+"SourceHanSansHWTC-Bold.woff2") format("woff2");font-display:swap}</style></head><body><article class="markdown-body"><h1>Nlc (n-ary Lambda Calculus)</h1>
+<h1>Quick overview</h1>
+<p>This is an encoding for <a href="Lambda-calculus.html">Lambda calculus</a>, designed to compress general lambda calculus programs well, both for very small expressions, and large expressions. This is accomplished through the use of a shifting-base encoding.</p>
+<p>It can be used as a (relatively slow) <a href="https://en.wikipedia.org/wiki/Hash_function">hash function</a>, but remember that this system is intentionally designed so that programs that are similar have similar hashes! Scrambling values is therefore recommended before use in a hash table.</p>
+<h1>Encoding</h1>
+<p>This encoding relies on a crucial fact about the grammar of <a href="~Stack-based-lambda-calculus.html">Stack-based-λ-calculus</a>: at any moment in the left-to-right reading of a program, the number of writable operators is known and finite, as are the number of writable operands.</p>
+<h1>The encoding</h1>
+<p>The stack contains symbols, which can be represented numerically. The simple symbols, Lambda and Apply, take no arguments, instead operating on the stack, but how do we represent variables from \([0, d)\)?</p>
+<p>\[\begin{align*}<br/>
+Apply = Pop &amp;= 0_{3}\\<br/>
+Var_{n} \space v &amp;= 1_{3}, v_{n}\\<br/>
+Lambda &amp;= 2_{3}\\<br/>
+\end{align*}\]<br/>
+Apply and pop share an identifier because they have mutually exclusive stacklength conditions.</p>
+<p>In order to not increase the &quot;weight&quot; of the apply and lambda operators, I chose to represent variables using two symbols. The first symbol identifies the operator, which, if 1, is a variable, which means that another symbol of base \(depth-1\) is required as an argument to the operator.</p>
+<p>However, there are conditions in which it is legal to write a symbol. If we allow for the encoding of &quot;illegal programs&quot;, it is obvious that space is wasted for other programs. Therefore, a key step in developing this encoding was making illegal programs impossible to encode.</p>
+<p>The solution was to have the number of operators change throughout the decoding of a program. \(Pop\) cannot be written if less or more than 1 expressions are on the stack, \(Apply\) cannot be written without more than one value already present on the stack, and \(Var\) cannot be written without a lambda depth of at least 0.</p>
+<table>
+<thead>
+<tr>
+<th>Op</th>
+<th>Legality Condition</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pop</td>
+<td>d &gt; 0</td>
+<td>Popping from a lambda can only</td>
+</tr>
+<tr>
+<td>Apply</td>
+<td>s &gt; 1</td>
+<td>Two elements are needed on the stack to apply</td>
+</tr>
+<tr>
+<td>Lambda</td>
+<td>true</td>
+<td>Lambda can always be written</td>
+</tr>
+<tr>
+<td>Var</td>
+<td>d &gt; 0</td>
+<td>Variables must reference a lambda to their left</td>
+</tr>
+</tbody>
+</table>
+<p>Consider that a single digit of base \((d &gt; 1) + (d &gt; 0) + 1\) is therefore required to represent the operator one wishes to write. This leads to an interesting idea, of representing stack-based lambda calculus as a list of variable-base digits.</p>
+<p>Therefore,<br/>
+\(\lambda 0 = Push, Var_{0}, Pop = [ 0_{1}, 0_{2}, 0_{1}, 0_{3} ]\).</p>
+<p>\[\begin{align}<br/>
+\text {Let } enc &amp;: List \space (Nat, Nat) \rightarrow Nat\\<br/>
+enc \space [(d, b)] &amp;= d\\<br/>
+enc \space [(d, b), rest] &amp;= d + b*enc(rest)\\\<br/>
+\end{align}\]<br/>
+Then:<br/>
+\[\begin{align}<br/>
+enc(\lambda 0) &amp;= enc([Push, Var_{0}, Pop])\\<br/>
+&amp;= enc([0_{1}, 0_{2}, 0_{2}])\\<br/>
+&amp;= 0 + 1(0 + 2(0))\\<br/>
+&amp;= 0.<br/>
+\end{align}\]</p>
+<p>For fun, let's see how big a useful lambda term is in this encoding.</p>
+<p>\[\begin{align}<br/>
+enc(add) &amp;= enc(\lambda abcd.ac(bcd))\\<br/>
+&amp;= enc(\lambda \lambda \lambda \lambda<br/>
+(3 \space 1 \space (2 \space 1 \space 0))<br/>
+)\\<br/>
+&amp;= enc([Push^{4},<br/>
+Var_{0}, Var_{1},<br/>
+Apply, Var_{2}, Apply,<br/>
+Var_{1}, Var_{3}, Apply^{2},<br/>
+Pop^4<br/>
+])\\<br/>
+&amp;= enc([<br/>
+0_{1}, 1_{2}, 2_{3}, 2_{3},<br/>
+1_{3}, 0_{4}, 1_{3}, 1_{4},<br/>
+0_{3}, 1_{3}, 2_{4}, 0_{3},<br/>
+0_{3}, 1_{4}, 0_{3}, 1_{3}, 0_{3}, 0_{3},<br/>
+0_{3}, 0_{3}, 0_{3}, 0_{3}, 0_{3}<br/>
+])\\<br/>
+&amp;= enc([<br/>
+1_{2}, 2_{3}, 2_{3},<br/>
+1_{3}, 0_{4}, 1_{3}, 1_{4},<br/>
+0_{3}, 1_{3}, 2_{4}, 0_{3},<br/>
+0_{3}, 1_{4}, 0_{3}, 1_{3}<br/>
+])\\<br/>
+&amp;= 1 + 2(2 + 3(2 + 3(1 + 3(0 + 4(1 + 3(1 + 4(0 + 3(1 + 3(2 + 4(0 + 3(0 + 3(1 + 4(0 + 3(1))))))))))))))\\<br/>
+&amp;= 10,972,835.<br/>
+\end{align}\]<br/>
+Note that \(23 &lt; log_2(enc(add)) &lt; 24\).</p>
+<p>In John Tromp's Blc, this is represented as the number 8,602,438,618.</p>
+<p>Note that \(33 &lt; \log_{2} Blc(add) &lt; 34\)<br/>
+<a href="https://justine.lol/lambda/#diagrams">This was found by placing a 1 in front of the binary number for addition and taking the base 2 logarithm of it</a></p>
+<h1>Applications</h1>
+<ul>
+<li>Storage of small binaries</li>
+<li>Storage of large binaries, thanks to the better growth characteristics of this encoding than Blc</li>
+</ul>
+<h1>Drawbacks</h1>
+<ul>
+<li>This is</li>
+</ul>
+</article><script>document.getElementsByClassName("markdown-body")[0].style.fontFamily='CJK';var code=document.getElementsByTagName("code");for(var i=0;i<code.length;++i){code[i].style.fontFamily='CJK MONO'}</script></body></html>

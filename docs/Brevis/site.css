@@ -4,11 +4,6 @@
 	--code-snippet-bg: #eeeeea;
 }
 
-span {
-	padding: 0;
-	margin: 0;
-}
-
 * {
 	font-size: var(--font-size);
 }
@@ -86,11 +81,12 @@ code {
 }
 
 textarea, code {
-	display: inline-block;
+	display: inline-table;
 	tab-size: 4;
 	-moz-tab-size: 4;
 	line-height: 1;
 	white-space: pre;
+	overflow-x: scroll;
 	color: #222;
 	font-family: "azuki_font", monospace;
 }
