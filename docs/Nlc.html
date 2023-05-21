@@ -4,7 +4,7 @@
 <p>This is an encoding for <a href="Lambda-calculus.html">Lambda calculus</a>, designed to compress general lambda calculus programs well, both for very small expressions, and large expressions. This is accomplished through the use of a shifting-base encoding.</p>
 <p>It can be used as a (relatively slow) <a href="https://en.wikipedia.org/wiki/Hash_function">hash function</a>, but remember that this system is intentionally designed so that programs that are similar have similar hashes! Scrambling values is therefore recommended before use in a hash table.</p>
 <h1>Encoding</h1>
-<p>This encoding relies on a crucial fact about the grammar of <a href="~Stack-based-lambda-calculus.html">Stack-based-λ-calculus</a>: at any moment in the left-to-right reading of a program, the number of writable operators is known and finite, as are the number of writable operands.</p>
+<p>This encoding relies on a crucial fact about the grammar of <a href="Stack-based-lambda-calculus.html">Stack-based-λ-calculus</a>: at any moment in the left-to-right reading of a program, the number of writable operators is known and finite, as are the number of writable operands.</p>
 <h1>The encoding</h1>
 <p>The stack contains symbols, which can be represented numerically. The simple symbols, Lambda and Apply, take no arguments, instead operating on the stack, but how do we represent variables from \([0, d)\)?</p>
 <p>\[\begin{align*}<br/>
