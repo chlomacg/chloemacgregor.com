@@ -1,63 +1,8 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><!DOCTYPE html><html><head><meta charset=UTF-8><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Markdown to HTML Converter 1.1.9 by magiclen.org"/><title></title><style>body{font-family:sans-serif;max-width:700px;line-height:1.5;padding:16px;margin:0 auto;}img{display:block;max-width:100%;}a{text-decoration:none;color:#0074d9;}a:hover{text-decoration:underline;}pre{-moz-tab-size:2;tab-size:2;}.math-display{overflow:auto;}table{border-collapse:collapse;}th,td{padding:12px 15px;border:thin solid #666;}thead tr{color:#444;text-align:left;}</style><style>@font-face {font-family:'CJK';src:local("NotoSansCJKTC-Regular"),local("SourceHanSansTC-Regular"),local("SourceHanSansTW-Regular"),local("NotoSansCJKJP-Regular"),local("NotoSansCJKKR-Regular"),local("NotoSansCJKHK-Regular"),local("NotoSansCJKSC-Regular"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-tc-woff2@2.004/SourceHanSansTC-Regular.woff2") format("woff2");font-display:swap}@font-face {font-family:'CJK';font-weight:bold;src:local("NotoSansCJKTC-Bold"),local("SourceHanSansTC-Bold"),local("SourceHanSansTW-Bold"),local("NotoSansCJKJP-Bold"),local("NotoSansCJKKR-Bold"),local("NotoSansCJKHK-Bold"),local("NotoSansCJKSC-Bold"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-tc-woff2@2.004/SourceHanSansTC-Bold.woff2") format("woff2");font-display:swap}</style><style>@font-face {font-family:'CJK MONO';src:local("NotoSansMonoCJKTC-Regular"),local("SourceHanSansHWTC-Regular"),local("SourceHanSansHWTW-Regular"),local("NotoSansMonoCJKJP-Regular"),local("NotoSansMonoCJKKR-Regular"),local("NotoSansMonoCJKHK-Regular"),local("NotoSansMonoCJKSC-Regular"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-hw-tc-woff2@2.004/SourceHanSansHWTC-Regular.woff2") format("woff2");font-display:swap}@font-face {font-family:'CJK MONO';font-weight:bold;src:local("NotoSansMonoCJKTC-Bold"),local("SourceHanSansHWTC-Bold"),local("SourceHanSansHWTW-Bold"),local("NotoSansMonoCJKJP-Bold"),local("NotoSansMonoCJKKR-Bold"),local("NotoSansMonoCJKHK-Bold"),local("NotoSansMonoCJKSC-Bold"),url($font_url+"SourceHanSansHWTC-Bold.woff2") format("woff2");font-display:swap}</style></head><body><article class="markdown-body"><h1>Stack-based lambda calculus</h1>
-<p>\[\begin{align}<br/>
-expr ::=&amp; \space op \space | \space op, expr\\<br/>
-op \space ::=&amp; \space Lambda \\<br/>
-&amp;| \space Var_n \\<br/>
-&amp;| \space Apply \\<br/>
-&amp;| \space Pop \\<br/>
-\end{align}\]<br/>
-As can be seen, there are four operators in the stack-based lambda calculus, one of which takes an argument, Var. Three of them have conditions for writing.</p>
-<table>
-<thead>
-<tr>
-<th>Instruction</th>
-<th>Stack effect</th>
-<th>Depth Effect</th>
-<th>Requirement to write</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Lambda</td>
-<td>0</td>
-<td>+1</td>
-<td>None</td>
-</tr>
-<tr>
-<td>Var n</td>
-<td>+1</td>
-<td>0</td>
-<td>0 &lt;= n &lt; D</td>
-</tr>
-<tr>
-<td>Apply</td>
-<td>-1</td>
-<td>0</td>
-<td>S &gt; 1</td>
-</tr>
-<tr>
-<td>Pop</td>
-<td>0</td>
-<td>-1</td>
-<td>S = 1</td>
-</tr>
-</tbody>
-</table>
-<p>There are two values that get modified as a stack-based lambda calculus program is read: the stack depth S, and the lambda depth D.</p>
-<p>If you're familiar with stack-based programming, skip this next section.</p>
-<h1>The stack</h1>
-<p>The stack has two operations that can be done to it: \(Pop\) and \(Push \space expr\), where \(expr\) is an expression to place at the &quot;top&quot; of the stack, and Pop returns the expression at the top of the stack.</p>
-<p>The stack is, as you may know, &quot;last in = first out&quot;, so pushing an expression and popping will return that same expression.</p>
-<p>An important property we will require is that lambdas contain bodies that have a stack of length 1, as this ensures that only one value is returned from a function, which maintains equivalence with the traditional lambda calculus.</p>
-<h1>The operators</h1>
-<p>\(Lambda\) pushes the value \(0\) to the depth stack, which contains the depth of .</p>
-<p>\(Var \space n\) pushes a variable named \(n\) onto the stack.</p>
-<p>\(Apply\) takes two stack parameters, the first popped is named \(f\), the second named \(x\), and pushes \((f \space x)\) to the stack. (This value will be evaluated before it is required, but not necesarily at the time of application).</p>
-<p>\(Pop\) requires that there be exactly one expression on the stack. This enforces that lambdas have a body of exactly one expression.</p>
-<p>Therefore, the identity program is written as follows:<br/>
-\(\lambda 0 = Lambda, Var_0, Pop\).</p>
-<p>... But hold on, isn't that <em>more</em> verbose? In terms of characters written, sure! But consider that both the writer of a program and the reader of an encoded program read left-to-right, and can retain the knowledge they gain from previous symbols.</p>
-<p>Because each of our instructions has a known stack effect, depth effect, and requirement to write (listed at the top of the page), we can make programs numeric.</p>
-<p><a href="Nlc.html">Nlc</a></p>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><!DOCTYPE html><html><head><meta charset=UTF-8><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Markdown to HTML Converter 1.1.9 by magiclen.org"/><title>~index</title><style>body{font-family:sans-serif;max-width:700px;line-height:1.5;padding:16px;margin:0 auto;}img{display:block;max-width:100%;}a{text-decoration:none;color:#0074d9;}a:hover{text-decoration:underline;}pre{-moz-tab-size:2;tab-size:2;}.math-display{overflow:auto;}table{border-collapse:collapse;}th,td{padding:12px 15px;border:thin solid #666;}thead tr{color:#444;text-align:left;}</style><style>@font-face {font-family:'CJK';src:local("NotoSansCJKTC-Regular"),local("SourceHanSansTC-Regular"),local("SourceHanSansTW-Regular"),local("NotoSansCJKJP-Regular"),local("NotoSansCJKKR-Regular"),local("NotoSansCJKHK-Regular"),local("NotoSansCJKSC-Regular"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-tc-woff2@2.004/SourceHanSansTC-Regular.woff2") format("woff2");font-display:swap}@font-face {font-family:'CJK';font-weight:bold;src:local("NotoSansCJKTC-Bold"),local("SourceHanSansTC-Bold"),local("SourceHanSansTW-Bold"),local("NotoSansCJKJP-Bold"),local("NotoSansCJKKR-Bold"),local("NotoSansCJKHK-Bold"),local("NotoSansCJKSC-Bold"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-tc-woff2@2.004/SourceHanSansTC-Bold.woff2") format("woff2");font-display:swap}</style><style>@font-face {font-family:'CJK MONO';src:local("NotoSansMonoCJKTC-Regular"),local("SourceHanSansHWTC-Regular"),local("SourceHanSansHWTW-Regular"),local("NotoSansMonoCJKJP-Regular"),local("NotoSansMonoCJKKR-Regular"),local("NotoSansMonoCJKHK-Regular"),local("NotoSansMonoCJKSC-Regular"),url("https://cdn.jsdelivr.net/gh/magiclen/source-han-sans-hw-tc-woff2@2.004/SourceHanSansHWTC-Regular.woff2") format("woff2");font-display:swap}@font-face {font-family:'CJK MONO';font-weight:bold;src:local("NotoSansMonoCJKTC-Bold"),local("SourceHanSansHWTC-Bold"),local("SourceHanSansHWTW-Bold"),local("NotoSansMonoCJKJP-Bold"),local("NotoSansMonoCJKKR-Bold"),local("NotoSansMonoCJKHK-Bold"),local("NotoSansMonoCJKSC-Bold"),url($font_url+"SourceHanSansHWTC-Bold.woff2") format("woff2");font-display:swap}</style></head><body><article class="markdown-body"><h1>Welcome</h1>
+<p>My name is Chloe. I'm a student, I do computer science, calisthenics, and occasionaly post about what I do. This is where I post. You may be looking for:</p>
+<ul>
+<li><a href="Portfolio.html">My-portfolio</a></li>
+<li>My resume</li>
+</ul>
 </article><script>document.getElementsByClassName("markdown-body")[0].style.fontFamily='CJK';var code=document.getElementsByTagName("code");for(var i=0;i<code.length;++i){code[i].style.fontFamily='CJK MONO'}</script></body></html>
