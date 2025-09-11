@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-display: 'Roboto', serif;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-VariableFont_wdth,wght.ttf');
+}
