@@ -1,1 +1,0 @@
-import init, {} from "./assets";

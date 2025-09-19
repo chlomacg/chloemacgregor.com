@@ -1,5 +1,3 @@
-export {mandelbrot, fizzbuzz, factors};
-
 const mandelbrot = `let Bailout = 16.0;
 let Maxiter = 1000;
 
@@ -113,3 +111,17 @@ let print_factors = fn(n) {
 
 print_factors(5120);
 `;
+
+export function getExample(exampleName: string): string {
+	switch(exampleName) {
+		case "mandelbrot":
+			return mandelbrot;
+		case "fizzbuzz":
+			return fizzbuzz;
+		case "find factors":
+			return factors;
+		default:
+			console.log("Error: received " + exampleName + " instead of valid example name");
+			return "error";
+	}
+}

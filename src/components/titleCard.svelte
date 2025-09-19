@@ -1,13 +1,3 @@
-<script lang="ts">
-    import { onMount } from "svelte";
-    import { animate } from "animejs";
-
-    let animation;
-
-    onMount(() => {
-    });
-</script>
-
 <div class="max-w-fit gap-20">
     <h1 class="text-5xl font-display font-extralight">
         Chloe MacGregor

@@ -1,4 +1,4 @@
-declare namespace wasm_bindgen {
+export declare namespace wasm_bindgen {
 	/* tslint:disable */
 	/* eslint-disable */
 	/**
@@ -42,4 +42,4 @@ declare interface InitOutput {
 *
 * @returns {Promise<InitOutput>}
 */
-declare function wasm_bindgen (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;
+export declare function wasm_bindgen (module_or_path?: InitInput | Promise<InitInput>): Promise<InitOutput>;

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import TitleCard from './components/titleCard.svelte';
-    import DarkModeSwitch from './components/DarkModeSwitch.svelte';
-    import Links from './components/links.svelte';
+    import TitleCard from '../components/titleCard.svelte';
+    import DarkModeSwitch from '../components/darkModeSwitch.svelte';
+    import Links from '../components/links.svelte';
 </script>
 
 <div class="min-h-[100vh] py-4 transition-colors duration-300 bg-[#fff] text-[#444] dark:bg-[#171614] dark:text-[#f2eeee]">

@@ -1,4 +1,4 @@
-let wasm_bindgen;
+export let wasm_bindgen;
 (function() {
     const __exports = {};
     let wasm;
