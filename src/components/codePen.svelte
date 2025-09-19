@@ -6,7 +6,7 @@
     import { indentWithTab } from "@codemirror/commands";
 
     import { getExample } from "../compiler/examplePrograms";
-    import { wasm_bindgen } from "../assets/brevislib";
+    import { wasm_bindgen } from "../compiler/wasm_glue/brevislib";
     import { cPrelude, jsPrelude } from "../compiler/preludes";
     import { prependDeclarations } from "../compiler/fixAwful";
 
@@ -27,7 +27,7 @@
             ],
         });
 
-        wasm_bindgen('./src/assets/brevislib_bg.wasm');
+        wasm_bindgen('/compiler_assets/brevislib_bg.wasm');
     });
     let selectedOutput  = $state("stdout");
     let compilerOutputs = $state({ c: "", js: "", stdout: "" });
