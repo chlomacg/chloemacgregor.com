@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-    import { SvelteTheme } from 'svelte-themes';
+    import { SvelteTheme, useTheme } from 'svelte-themes';
 
 	interface Props {
 		children?: import('svelte').Snippet;
@@ -9,7 +9,7 @@
 	let { children }: Props = $props();
 </script>
 
-<SvelteTheme>
+<SvelteTheme attribute="class">
 	<nav></nav>
 	<main>
 		{@render children?.()}

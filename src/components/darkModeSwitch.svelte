@@ -7,13 +7,6 @@
             theme.theme = 'light';
         else
             theme.theme = 'dark';
-        setTheme();
-    }
-    function setTheme() {
-        document.documentElement.classList.toggle(
-            'dark',
-            localStorage.theme === 'dark'
-        );
     }
 </script>
 
