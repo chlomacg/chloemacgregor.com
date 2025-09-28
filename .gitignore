@@ -3,7 +3,7 @@ node_modules
 /build
 /.svelte-kit
 /package
-md/
+/md
 .env
 .env.*
 !.env.example

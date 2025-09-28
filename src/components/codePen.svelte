@@ -62,23 +62,44 @@
     }
 </script>
 
-<div>
-    <div class="bg-[#444] text-[#fff] rounded-md">
-        <div class="flex flex-row bg-gray-600 rounded-t-md">
-            <button type="button" class="bg-blue-200 text-[#111] p-2 rounded-tl-md" onclick={compile_source()}>Run &#x25B6;</button>
-            <DropdownMenu.Root>
-                <DropdownMenu.Trigger class="p-2">Examples &#x25BC;</DropdownMenu.Trigger>
-
-                <DropdownMenu.Portal>
-                    <DropdownMenu.Content align="start" class="bg-gray-600 text-white p-2 flex flex-col gap-4">
-                        <DropdownMenu.Item textValue="mandelbrot" closeOnSelect={true} onSelect={selectExample("mandelbrot")} class="data-highlighted:bg-gray-500 p-2 rounded-sm">Mandelbrot</DropdownMenu.Item>
-                        <DropdownMenu.Item textValue="fizzbuzz" closeOnSelect={true} onSelect={selectExample("fizzbuzz")} class="data-highlighted:bg-gray-500 p-2 rounded-sm">FizzBuzz</DropdownMenu.Item>
-                        <DropdownMenu.Item textValue="factors" closeOnSelect={true} onSelect={selectExample("find factors")} class="data-highlighted:bg-gray-500 p-2 rounded-sm">Find Factors</DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                </DropdownMenu.Portal>
-            </DropdownMenu.Root>
+<div class="mx-4">
+    <div class="flex flex-col justify-between md:flex-row gap-[5vw]">
+        <div class="flex-1 bg-[#444] text-[#fff] rounded-md">
+            <div class="flex flex-row bg-gray-600 rounded-t-md">
+                <button type="button" class="bg-blue-200 text-[#111] p-2 rounded-tl-md" onclick={compile_source()}>Run &#x25B6;</button>
+                <DropdownMenu.Root>
+                    <DropdownMenu.Trigger class="p-2">Examples &#x25BC;</DropdownMenu.Trigger>
+    
+                    <DropdownMenu.Portal>
+                        <DropdownMenu.Content align="start" class="bg-gray-600 text-white p-2 flex flex-col gap-4">
+                            <DropdownMenu.Item textValue="mandelbrot" closeOnSelect={true} onSelect={selectExample("mandelbrot")} class="data-highlighted:bg-gray-500 p-2 rounded-sm">Mandelbrot</DropdownMenu.Item>
+                            <DropdownMenu.Item textValue="fizzbuzz" closeOnSelect={true} onSelect={selectExample("fizzbuzz")} class="data-highlighted:bg-gray-500 p-2 rounded-sm">FizzBuzz</DropdownMenu.Item>
+                            <DropdownMenu.Item textValue="factors" closeOnSelect={true} onSelect={selectExample("find factors")} class="data-highlighted:bg-gray-500 p-2 rounded-sm">Find Factors</DropdownMenu.Item>
+                        </DropdownMenu.Content>
+                    </DropdownMenu.Portal>
+                </DropdownMenu.Root>
+            </div>
+            <div bind:this={editorElement} class="rounded-b-md"></div>
         </div>
-        <div bind:this={editorElement} class="rounded-b-md"></div>
+
+        <div class="flex-1">
+            <section class="mb-4">
+                <h2 class="text-2xl font-display font-[600]">Declarations</h2>
+                <p>A variable x can be declared with <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">let x = definition;</code>. Functions have no special syntax for declaration.</p>
+            </section>
+            <section class="mb-4">
+                <h2 class="text-2xl font-display font-[600]">Functions</h2>
+                <p>Functions are always anonymous, are:</p>
+                <ul class="list-disc ml-8 text-base/8">
+                    <li>Declared as <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">fn(x, y, z) {"{ body }"}</code></li>
+                    <li>First-class values that can be passed as arguments to other functions</li>
+                    <li>Able to capture their arguments</li>
+                    <li>Called with the syntax <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">fn(x, y, z)</code></li>
+                </ul>
+            </section>
+            <h2 class="text-2xl font-display font-[600]">Conditionals</h2>
+            <p>Currently, only the <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if</code> conditional is supported, via the syntax <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if cond {"{ body }"} else {"{ body }"}</code>, where the else part is optional. If-expressions are value expressions, so code such as <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if b {"{ true }"} else {"{ false }"}</code> can be used to stringify booleans.</p>
+        </div>
     </div>
 
     
