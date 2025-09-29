@@ -63,7 +63,7 @@
 </script>
 
 <div class="mx-4">
-    <div class="flex flex-col justify-between md:flex-row gap-[5vw]">
+    <div class="flex flex-col justify-between lg:flex-row gap-[5vw]">
         <div class="flex-1 bg-[#444] text-[#fff] rounded-md">
             <div class="flex flex-row bg-gray-600 rounded-t-md">
                 <button type="button" class="bg-blue-200 text-[#111] p-2 rounded-tl-md" onclick={compile_source()}>Run &#x25B6;</button>
