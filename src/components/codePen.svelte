@@ -94,11 +94,11 @@
                     <li>Declared as <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">fn(x, y, z) {"{ body }"}</code></li>
                     <li>First-class values that can be passed as arguments to other functions</li>
                     <li>Able to capture their arguments</li>
-                    <li>Called with the syntax <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">fn(x, y, z)</code></li>
+                    <li>Called with the syntax <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">f(x, y, z)</code></li>
                 </ul>
             </section>
             <h2 class="text-2xl font-display font-[600]">Conditionals</h2>
-            <p>Currently, only the <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if</code> conditional is supported, via the syntax <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if cond {"{ body }"} else {"{ body }"}</code>, where the else part is optional. If-expressions are value expressions, so code such as <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if b {"{ true }"} else {"{ false }"}</code> can be used to stringify booleans.</p>
+            <p>Currently, only the <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if</code> conditional is supported, via the syntax <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if cond {"{ body }"} else {"{ body }"}</code>, where the else part is optional. If-expressions are value expressions, so code such as <code class="text-nowrap p-0.5 bg-gray-600 text-[#fff]">if b {'{ "true" }'} else {'{ "false" }'}</code> can be used to stringify booleans.</p>
         </div>
     </div>
 
