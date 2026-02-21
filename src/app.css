@@ -1,12 +1,55 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-display: 'Roboto', serif;
+  --font-display: "Roboto", serif;
 }
 
 @font-face {
-    font-family: 'Roboto';
-    src: url('/fonts/roboto/Roboto-VariableFont_wdth,wght.ttf');
+  font-family: "Roboto";
+  src: url("/fonts/roboto/Roboto-VariableFont_wdth,wght.ttf");
+}
+
+@property --var1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: white;
+}
+
+:where(.dark, .dark *) {
+  --var1: #171614;
+}
+
+body {
+  transition: --var1 cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+}
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-track {
+  width: 20px;
+  margin-top: -3px;
+  background-color: var(--var1);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-image: url("/crosses.png");
+  border: 3px solid #222;
+  border-right: none;
+  border-top-left-radius: var(--radius-md) /* 0.375rem = 6px */;
+  border-bottom-left-radius: var(--radius-md);
+}
+
+:where(.dark, .dark *) *::-webkit-scrollbar,
+:where(.dark, .dark *) *::-webkit-scrollbar-track {
+  background-color: var(--var1);
+}
+
+:where(.dark, .dark *) *::-webkit-scrollbar-thumb {
+  background-color: #171614;
+  background-image: url("/crosses-dark.png");
+  border: 3px solid #bbb;
+  border-right: none;
+  border-top-left-radius: var(--radius-md) /* 0.375rem = 6px */;
+  border-bottom-left-radius: var(--radius-md);
 }

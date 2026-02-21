@@ -5,7 +5,7 @@
 </script>
 
 <div class="min-h-[100vh] py-4 transition-colors duration-300 bg-[#fff] text-[#444] dark:bg-[#171614] dark:text-[#f2eeee]">
-    <div class="mx-4 flex flex-col">
+    <div class="max-w-300 mx-auto flex flex-col">
         <DarkModeSwitch />
         <section class="min-h-[90vh] flex flex-col justify-center gap-12">
             <TitleCard />

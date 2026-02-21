@@ -1,5 +1,5 @@
 <script>
-    const buttonStyle = "transition-colors outline-hidden text-center px-8 py-4 rounded-sm border-2 border-dark-500 hover:bg-[#eee2cf] focus:bg-[#eee2cf] hover:focus:bg-[#eee2cf] dark:hover:bg-[#7b6964] dark:focus:bg-[#7b6964] dark:hover:focus:bg-[#7b6964]";
+    const buttonStyle = "transition-colors outline-hidden text-center px-8 py-4 rounded-sm border-2 border-dark-500 hover:bg-[#cfa983] focus:bg-[#cfa983] hover:focus:bg-[#cfa983] dark:hover:bg-[#722121] dark:focus:bg-[#722121] dark:hover:focus:bg-[#722121]";
 </script>
 
 
